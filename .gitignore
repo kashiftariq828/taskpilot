@@ -141,3 +141,12 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Prisma / SQLite
+*.db
+*.db-journal
+/src/generated/prisma
+
+# TypeScript build info
+*.tsbuildinfo
+next-env.d.ts
