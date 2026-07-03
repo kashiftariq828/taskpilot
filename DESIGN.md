@@ -50,6 +50,10 @@ Reuse these before writing anything new; extend via a variant prop, not a fork.
   **Popover**, **DropdownMenu**, **Select** — overlay/surface primitives.
 - **Input**, **Textarea**, **Label**, **Form** (React-Hook-Form + Zod resolver) — forms;
   label sits above the control, field errors inline in the destructive color.
+- **Checkbox** (`checkbox.tsx`, Base-UI `Checkbox.Root`/`Indicator` + Lucide `CheckIcon`) —
+  16px square, `border-input` resting, `data-[checked]` fills with `--primary` and shows the
+  check in `--primary-foreground`; same `focus-visible` ring + `aria-invalid` treatment as
+  Input/Button. Used by the task edit dialog's subtask checklist (`tasks/subtask-list.tsx`).
 - **Skeleton** (loading states), **Avatar**, **Sonner** `<Toaster>` (feedback).
 
 ## Bans already followed (keep following)

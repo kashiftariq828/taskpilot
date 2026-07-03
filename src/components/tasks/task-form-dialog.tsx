@@ -34,6 +34,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { DatePicker } from "@/components/tasks/date-picker";
+import { SubtaskList } from "@/components/tasks/subtask-list";
 import { createTask, updateTask } from "@/lib/actions/tasks";
 import { taskFormSchema, type TaskFormValues } from "@/lib/validations/task";
 import type { Task } from "@/generated/prisma/client";
@@ -150,7 +151,8 @@ export function TaskFormDialog({
                         <SelectValue placeholder="Select a project">
                           {(value: string) =>
                             projects.find((project) => project.id === value)
-                              ?.name}
+                              ?.name
+                          }
                         </SelectValue>
                       </SelectTrigger>
                     </FormControl>
@@ -246,6 +248,11 @@ export function TaskFormDialog({
                 </FormItem>
               )}
             />
+            {isEditing && task && (
+              <div className="border-t pt-4">
+                <SubtaskList taskId={task.id} />
+              </div>
+            )}
             <DialogFooter>
               <Button
                 type="button"
