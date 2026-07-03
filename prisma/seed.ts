@@ -112,6 +112,28 @@ async function main() {
     ],
   });
 
+  // A task with a subtask checklist so the Tasks-list progress badge has a
+  // known "2 completed of 5" example to verify against.
+  await prisma.task.create({
+    data: {
+      title: "Launch new pricing page",
+      description: "Ship the redesigned pricing page with the new tiers.",
+      status: Status.IN_PROGRESS,
+      priority: Priority.HIGH,
+      dueDate: daysFromNow(3),
+      projectId: website.id,
+      subtasks: {
+        create: [
+          { title: "Finalize tier copy", completed: true },
+          { title: "Design comparison table", completed: true },
+          { title: "Wire up checkout links", completed: false },
+          { title: "Add FAQ section", completed: false },
+          { title: "QA on mobile", completed: false },
+        ],
+      },
+    },
+  });
+
   console.log("Seed complete.");
 }
 

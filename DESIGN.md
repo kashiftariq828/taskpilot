@@ -25,6 +25,8 @@ All color/radius come from these CSS custom properties (mapped into Tailwind via
 - **Accent / actions:** `--primary: oklch(0.205 0 0)` on `--primary-foreground: oklch(0.985 0 0)`;
   `--secondary`/`--accent: oklch(0.97 0 0)`. Surfaces: `--card`/`--popover: oklch(1 0 0)`.
 - **Semantic:** `--destructive: oklch(0.577 0.245 27.325)` (the one chromatic token; red).
+  Emerald (`emerald-500/600`) is reused sparingly for "done"/complete affordances
+  (e.g. `StatusBadge` DONE, a fully-complete `SubtaskProgressBadge`).
 - **Sidebar & chart** tokens (`--sidebar-*`, `--chart-1..5`) exist for the shell and
   data viz; grayscale in both themes. Dark overrides live under `.dark`.
 
@@ -37,6 +39,8 @@ All color/radius come from these CSS custom properties (mapped into Tailwind via
   collapses to a `Sheet` drawer on mobile (`mobile-sidebar.tsx`). Brand + `SidebarNav` inside.
 - **Header** (`header.tsx`): `flex h-14 shrink-0 items-center justify-between border-b bg-background px-4 md:px-6`.
 - Pages are left-aligned in the shell; content max-width `max-w-6xl`.
+- **Wide tables** scroll inside their own container, never the page: the wrapper is
+  `overflow-x-auto rounded-xl border` so the Tasks table stays put at 375px.
 
 ## Component set (`src/components/ui`, Base-UI + CVA)
 
@@ -55,6 +59,13 @@ Reuse these before writing anything new; extend via a variant prop, not a fork.
   check in `--primary-foreground`; same `focus-visible` ring + `aria-invalid` treatment as
   Input/Button. Used by the task edit dialog's subtask checklist (`tasks/subtask-list.tsx`).
 - **Skeleton** (loading states), **Avatar**, **Sonner** `<Toaster>` (feedback).
+
+### Composed task components (`src/components/tasks`)
+
+- **SubtaskProgressBadge** (`subtask-progress-badge.tsx`) — a compact "completed/total"
+  count (e.g. "2/5") built on `Badge` (`secondary` variant, `tabular-nums`). Renders
+  `null` when a task has no subtasks; tints emerald when all are complete. Reusable
+  anywhere a task is summarized (Tasks list today; dashboard upcoming-tasks list next).
 
 ## Bans already followed (keep following)
 

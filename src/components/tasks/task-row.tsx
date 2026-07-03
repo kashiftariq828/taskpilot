@@ -12,11 +12,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { StatusBadge } from "@/components/shared/status-badge";
 import { PriorityBadge } from "@/components/shared/priority-badge";
+import { SubtaskProgressBadge } from "@/components/tasks/subtask-progress-badge";
 import { TaskFormDialog } from "@/components/tasks/task-form-dialog";
 import { DeleteTaskDialog } from "@/components/tasks/delete-task-dialog";
 import type { Task } from "@/generated/prisma/client";
 
-type TaskWithProject = Task & { project: { name: string } };
+type TaskWithProject = Task & {
+  project: { name: string };
+  subtaskTotal: number;
+  subtaskCompleted: number;
+};
 type ProjectOption = { id: string; name: string };
 
 export function TaskRow({
@@ -45,6 +50,12 @@ export function TaskRow({
         </td>
         <td className="px-4 py-3">
           <PriorityBadge priority={task.priority} />
+        </td>
+        <td className="px-4 py-3">
+          <SubtaskProgressBadge
+            completed={task.subtaskCompleted}
+            total={task.subtaskTotal}
+          />
         </td>
         <td className="px-4 py-3 text-muted-foreground">
           {task.dueDate

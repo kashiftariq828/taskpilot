@@ -10,7 +10,11 @@ import { TaskRow } from "@/components/tasks/task-row";
 import { deleteTask } from "@/lib/actions/tasks";
 import type { Task } from "@/generated/prisma/client";
 
-type TaskWithProject = Task & { project: { name: string } };
+type TaskWithProject = Task & {
+  project: { name: string };
+  subtaskTotal: number;
+  subtaskCompleted: number;
+};
 type ProjectOption = { id: string; name: string };
 
 export function TasksList({
@@ -23,7 +27,7 @@ export function TasksList({
   const router = useRouter();
   const [optimisticTasks, removeOptimistic] = useOptimistic(
     tasks,
-    (state, id: string) => state.filter((task) => task.id !== id)
+    (state, id: string) => state.filter((task) => task.id !== id),
   );
   const [, startTransition] = useTransition();
 
@@ -51,7 +55,7 @@ export function TasksList({
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border">
+    <div className="overflow-x-auto rounded-xl border">
       <table className="w-full text-sm">
         <thead className="bg-muted/50 text-left text-xs text-muted-foreground">
           <tr>
@@ -59,6 +63,7 @@ export function TasksList({
             <th className="px-4 py-2.5 font-medium">Project</th>
             <th className="px-4 py-2.5 font-medium">Status</th>
             <th className="px-4 py-2.5 font-medium">Priority</th>
+            <th className="px-4 py-2.5 font-medium">Progress</th>
             <th className="px-4 py-2.5 font-medium">Due</th>
             <th className="px-2 py-2.5" />
           </tr>
